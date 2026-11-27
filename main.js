@@ -118,7 +118,7 @@
   gsap.to(".hero-copy", { yPercent: -30, opacity: 0, ease: "none", scrollTrigger: { trigger: ".hero", start: "10% top", end: "70% top", scrub: true } });
 
   // ---------- Parallax de los fondos (se suma al movimiento lento de cada foto) ----------
-  $$(".scene .bg").forEach((bg) => {
+  if (window.matchMedia("(min-width: 768px)").matches) $$(".scene .bg").forEach((bg) => {
     gsap.fromTo(bg, { yPercent: -6 }, { yPercent: 6, ease: "none", scrollTrigger: { trigger: bg.parentElement, start: "top bottom", end: "bottom top", scrub: true } });
   });
 
