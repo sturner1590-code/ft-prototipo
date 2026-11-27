@@ -61,7 +61,7 @@
 
   // ---------- Desplazamiento suave ----------
   let lenis = null;
-  if (!reduce && typeof window.Lenis !== "undefined") {
+  if (!reduce && typeof window.Lenis !== "undefined" && !window.matchMedia("(pointer: coarse), (max-width: 767px)").matches) {
     lenis = new Lenis({ duration: 1.15, smoothWheel: true });
     lenis.on("scroll", ScrollTrigger.update);
     gsap.ticker.add((t) => lenis.raf(t * 1000));
@@ -92,8 +92,11 @@
   });
 
   // ---------- Contadores ----------
+  // En celular (táctil) el navegador pausa el código mientras el dedo desliza: los números se muestran
+  // directo en su valor final para que nunca se vea un "0" o una cifra a medias.
+  const touch = window.matchMedia("(pointer: coarse), (max-width: 767px)").matches;
   const fmt = new Intl.NumberFormat("es-MX");
-  $$("[data-count]").forEach((el) => {
+  if (!touch) $$("[data-count]").forEach((el) => {
     const to = +el.dataset.count, plain = el.hasAttribute("data-plain");
     const from = plain ? Math.max(0, to - 60) : 0; // los años cuentan desde poco antes, no desde cero
     el.textContent = plain ? from : fmt.format(from);
@@ -127,6 +130,12 @@
   });
 
   // ---------- Entradas: aparecen una sola vez al entrar en pantalla y ya no se ocultan ----------
+  // En celular la aparición la hace el CSS ligado al deslizamiento (ver styles.css, .sd); no se oculta nada con JS
+  if (touch) {
+    if (window.CSS && CSS.supports("animation-timeline: view()")) document.documentElement.classList.add("sd");
+    window.addEventListener("load", () => ScrollTrigger.refresh());
+    return;
+  }
   document.documentElement.classList.add("js-reveal");
   const showEl = (el) => el.classList.add("in");
   if ("IntersectionObserver" in window) {

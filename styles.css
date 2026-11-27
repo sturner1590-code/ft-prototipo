@@ -493,3 +493,11 @@ main { overflow-x: clip; }
 .js-reveal .chips.in li:nth-child(6){transition-delay:.25s} .js-reveal .chips.in li:nth-child(7){transition-delay:.3s}
 .js-reveal .chips.in li:nth-child(8){transition-delay:.35s}
 @media (prefers-reduced-motion: reduce) { .js-reveal .reveal, .js-reveal .helix *, .js-reveal .chips li { opacity: 1 !important; transform: none !important; } }
+
+/* ===== Celular: aparición ligada al deslizamiento (la hace el navegador, no se pausa con el dedo) =====
+   Cada bloque se aclara mientras entra por la parte de abajo de la pantalla y queda 100% visible
+   antes de llegar a la mitad. Nunca se vuelve a ocultar. Sin soporte, el texto simplemente se ve. */
+@keyframes sdIn { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: no-preference) {
+  .sd .reveal { animation: sdIn linear both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
+}
