@@ -487,3 +487,7 @@ main { overflow-x: clip; }
   /* el fondo fijo del celular nunca se adelanta: queda en su propia capa por detrás */
   .scene:not(#aprender) > .bg img, .scene:not(#aprender) > .bg video, .hero .hero-bg img { z-index: 0; }
 }
+
+/* Etiquetas centradas: tecnologías (NL 4.0) y causas (ANEI) */
+.chips, .causes { justify-content: center; margin-left: auto; margin-right: auto; max-width: 980px; }
+.chips { max-width: 1160px; }
