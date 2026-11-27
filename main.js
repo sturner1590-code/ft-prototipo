@@ -114,34 +114,28 @@
   gsap.from(".hero .eyebrow, .hero-line", { y: 20, opacity: 0, duration: 0.9, ease: "power3.out", stagger: 0.1, delay: 0.45 });
   gsap.from(".hero-man", { y: 80, opacity: 0, duration: 1.4, ease: "power3.out", delay: 0.2 });
   gsap.from(".pillar", { y: 40, opacity: 0, duration: 0.8, ease: "power3.out", stagger: 0.08, delay: 0.7 });
-  const desktop = window.matchMedia("(min-width: 768px)").matches;
-  if (desktop) {
-    gsap.to(".hero-man", { yPercent: 10, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
-    // en escritorio el nombre solo se eleva al bajar; ya no se desvanece
-    gsap.to(".hero-copy", { yPercent: -12, ease: "none", scrollTrigger: { trigger: ".hero", start: "10% top", end: "bottom top", scrub: true } });
-  }
+  gsap.to(".hero-man", { yPercent: 10, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+  gsap.to(".hero-copy", { yPercent: -30, opacity: 0, ease: "none", scrollTrigger: { trigger: ".hero", start: "10% top", end: "70% top", scrub: true } });
 
   // ---------- Parallax de los fondos (se suma al movimiento lento de cada foto) ----------
   if (window.matchMedia("(min-width: 768px)").matches) $$(".scene .bg").forEach((bg) => {
     gsap.fromTo(bg, { yPercent: -6 }, { yPercent: 6, ease: "none", scrollTrigger: { trigger: bg.parentElement, start: "top bottom", end: "bottom top", scrub: true } });
   });
 
-  // ---------- Entradas: aparecen una sola vez al entrar en pantalla y ya no se ocultan ----------
-  document.documentElement.classList.add("js-reveal");
-  const showEl = (el) => el.classList.add("in");
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver((entries) => entries.forEach((e) => {
-      if (e.isIntersecting) { showEl(e.target); io.unobserve(e.target); }
-    }), { rootMargin: "0px 0px -8% 0px", threshold: 0 });
-    $$(".reveal, .helix, .chips").forEach((el) => {
-      // lo que ya quedó arriba de la pantalla (al recargar a media página) se muestra de inmediato
-      if (el.getBoundingClientRect().bottom < 0) showEl(el); else io.observe(el);
-    });
-  } else {
-    $$(".reveal, .helix, .chips").forEach(showEl);
+  // ---------- Entradas ----------
+  $$(".reveal").forEach((el) => {
+    gsap.from(el, { y: 60, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 90%" } });
+  });
+  // ---------- NL 4.0: los tres círculos de la triple hélice se juntan al hacer scroll ----------
+  const helix = $(".helix svg");
+  if (helix) {
+    const tl = gsap.timeline({ scrollTrigger: { trigger: ".helix", start: "top 85%", end: "center 50%", scrub: 0.6 } });
+    tl.from(".h-gov", { x: -90, y: -50, opacity: 0, ease: "none" }, 0)
+      .from(".h-aca", { x: 90, y: -50, opacity: 0, ease: "none" }, 0)
+      .from(".h-ind", { y: 110, opacity: 0, ease: "none" }, 0)
+      .from(".h-core", { scale: 0, transformOrigin: "260px 222px", ease: "back.out(2)" }, 0.6);
   }
-  // red de seguridad: si por algo una entrada no se disparó, se muestra en 4 s
-  setTimeout(() => $$(".reveal").forEach((el) => { if (el.getBoundingClientRect().top < innerHeight) showEl(el); }), 4000);
+  gsap.from(".chips li", { y: 20, opacity: 0, duration: 0.5, stagger: 0.06, ease: "power2.out", scrollTrigger: { trigger: ".chips", start: "top 92%" } });
 
   window.addEventListener("load", () => ScrollTrigger.refresh());
 })();
