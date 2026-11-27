@@ -476,3 +476,14 @@ main { overflow-x: clip; }
   .rumbo-head { flex-direction: column; align-items: flex-start; gap: 18px; }
   .somos-logo { width: min(200px, 55vw); order: -1; }
 }
+
+/* ===== Capas: el texto SIEMPRE al frente de la foto/video (corrige iPhone con fondo fijo) ===== */
+.scene > .bg, .hero > .hero-bg { z-index: 0; }
+.scene > .shade, .scene > .tech-grid, .hero > .shade { z-index: 1; }
+.scene > .wrap, .hero > .hero-grid, .hero > .pillars, .scene > .inset { position: relative; z-index: 3; transform: translateZ(0); }
+.hero > .pillars { position: absolute; }
+@media (max-width: 767px) {
+  .hero > .pillars { position: relative; }
+  /* el fondo fijo del celular nunca se adelanta: queda en su propia capa por detrás */
+  .scene:not(#aprender) > .bg img, .scene:not(#aprender) > .bg video, .hero .hero-bg img { z-index: 0; }
+}

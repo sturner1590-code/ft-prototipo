@@ -115,7 +115,7 @@
   gsap.from(".hero-man", { y: 80, opacity: 0, duration: 1.4, ease: "power3.out", delay: 0.2 });
   gsap.from(".pillar", { y: 40, opacity: 0, duration: 0.8, ease: "power3.out", stagger: 0.08, delay: 0.7 });
   gsap.to(".hero-man", { yPercent: 10, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
-  gsap.to(".hero-copy", { yPercent: -30, opacity: 0, ease: "none", scrollTrigger: { trigger: ".hero", start: "10% top", end: "70% top", scrub: true } });
+  gsap.to(".hero-copy", { yPercent: -12, ease: "none", scrollTrigger: { trigger: ".hero", start: "10% top", end: "bottom top", scrub: true } }); // ya no se desvanece
 
   // ---------- Parallax de los fondos (se suma al movimiento lento de cada foto) ----------
   if (window.matchMedia("(min-width: 768px)").matches) $$(".scene .bg").forEach((bg) => {
