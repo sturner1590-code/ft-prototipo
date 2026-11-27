@@ -464,3 +464,15 @@ main { overflow-x: clip; }
   #sumate .bg img { object-position: 60% 45%; }
   .mega { white-space: nowrap; font-size: clamp(72px, 23vw, 120px); }
 }
+
+/* Tarjetas de portada: misma altura de etiqueta para que los números queden alineados */
+.p-top { min-height: 2.7em; align-items: flex-start; }
+.p-k { line-height: 1.35; }
+
+/* 07 · Hoy: logotipo de SOMOS a la derecha */
+.rumbo-head { display: flex; justify-content: space-between; align-items: center; gap: 32px; }
+.somos-logo { width: clamp(220px, 24vw, 380px); height: auto; flex: none; filter: drop-shadow(0 4px 18px rgba(0,0,0,.55)); }
+@media (max-width: 767px) {
+  .rumbo-head { flex-direction: column; align-items: flex-start; gap: 18px; }
+  .somos-logo { width: min(200px, 55vw); order: -1; }
+}
